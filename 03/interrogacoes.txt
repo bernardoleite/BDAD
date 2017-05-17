@@ -1,0 +1,15 @@
+1- Quais os nomes dos médicos que dão consultas da especialidade OFTALMOLOGIA? 
+
+SELECT distinct nome FROM Medico
+WHERE Medico.Especialidade = 'OFTALMOLOGIA';
+
+2 - Qual o nome dos pacientes que não têm Seguro Seguro Ativado?
+
+SELECT Nome FROM Paciente
+    WHERE Seguro NOT IN
+    (SELECT SeguroIdent From Seguro);
+
+3- Qual é a duração média das Consultas de determinada Especialidade?
+
+SELECT nome, AVG(HoraFim-HoraInicio)
+FROM (SELECT nome, )
