@@ -14,10 +14,15 @@ SELECT Nome FROM Paciente
 SELECT nome, AVG(HoraFim-HoraInicio)
 FROM (SELECT nome, )
 
-
 4- Quais os nomes comuns a médicos e pacientes? (Perg 3)
 
+SELECT Nome FROM Medico INTERSECT SELECT Nome FROM Paciente;
+
 5- Quais as consultas do médico X nos próximos 3 dias?
+
+SELECT Dia FROM Consulta WHERE
+(SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico) AND
+(SELECT Dia FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+3 day') >= Consulta.Dia)
 
 6- Qual o funcionário com maior dia de trabalho?
 
