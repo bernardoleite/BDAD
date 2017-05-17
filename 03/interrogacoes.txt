@@ -3,7 +3,7 @@
 SELECT distinct nome FROM Medico
 WHERE Medico.Especialidade = 'OFTALMOLOGIA';
 
-2 - Qual o nome dos pacientes que não têm Seguro Seguro Ativado?
+2 - Qual o nome dos pacientes que não têm Seguro Ativado?
 
 SELECT Nome FROM Paciente
     WHERE Seguro NOT IN
@@ -13,3 +13,23 @@ SELECT Nome FROM Paciente
 
 SELECT nome, AVG(HoraFim-HoraInicio)
 FROM (SELECT nome, )
+
+
+4- Quais os nomes comuns a médicos e pacientes? (Perg 3)
+
+5- Quais as consultas do médico X nos próximos 3 dias?
+
+6- Qual o funcionário com maior dia de trabalho?
+
+7- Qual a sala mais usada para se realizar exames?
+
+8- Qual o nome de cada médico chefe de cada especialidade? 
+
+9- Qual o número de exames médio por paciente? (Perg 14)
+
+10- Qual o número máximo de exames marcados numa consulta?
+
+11- Qual a média de exames marcados para cada tipo de exame?
+
+12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ? 
+
