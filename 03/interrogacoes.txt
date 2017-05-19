@@ -30,7 +30,7 @@ SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+
 
 
 
-7- Qual a sala mais usada para se realizar exames?
+7- Para cada exame quais as salas usadas e quantas vezes foram usadas?
 
 8- Qual o nome o médico chefe de cada especialidade? 
 
@@ -45,4 +45,16 @@ SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) F
 11- Qual a média de exames marcados para cada tipo de exame?
 
 12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ? 
+
+13 - Quais os pacientes que fizeram 2vezes o mesmo exame?
+
+14 - Quais os exames em que o médico responsável por ele é o mesmo médico da consulta?
+
+15 -  A média de recursos Humanos para cada tipo de exame?
+
+16 - Qual o exame mais comum prescrita por cada especialidade médica?
+
+17 - Quais os tipos de exames que são feitos em mais de 3 salas diferentes?
+
+18 - Quais os funcionários que trabalham nos mesmos dias (para cada dia indicar todos os trabalhadores independentemente da categoria)
 
