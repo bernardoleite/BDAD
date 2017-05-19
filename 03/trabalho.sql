@@ -22,34 +22,34 @@ INSERT INTO Departamento VALUES ('CARDIOLOGIA');
 INSERT INTO Departamento VALUES ('OTORRINOLARINGOLOGIA');
 
 -- Table: DepEnfermeiro
-CREATE TABLE DepEnfermeiro (Enfermeiro REFERENCES Enfermeiro (NIF), Departamento REFERENCES Departamento (DesignaÁ„o), PRIMARY KEY (Enfermeiro, Departamento));
+CREATE TABLE DepEnfermeiro (Enfermeiro REFERENCES Enfermeiro (NIF), Departamento REFERENCES Departamento (Designa√ß√£o), PRIMARY KEY (Enfermeiro, Departamento));
 
--- Table: DepFuncion·rio
-CREATE TABLE DepFuncion·rio (Funcion·rio REFERENCES Funcion·rio (NIF), Departamento REFERENCES Departamento (DesignaÁ„o), PRIMARY KEY (Funcion·rio, Departamento));
+-- Table: DepFuncion√°rio
+CREATE TABLE DepFuncion√°rio (Funcion√°rio REFERENCES Funcion√°rio (NIF), Departamento REFERENCES Departamento (Designa√ß√£o), PRIMARY KEY (Funcion√°rio, Departamento));
 
--- Table: DepTÈcnico
-CREATE TABLE DepTÈcnico (TÈcnico REFERENCES TÈcnico (NIF), Departamento REFERENCES Departamento (DesignaÁ„o), PRIMARY KEY (TÈcnico, Departamento));
+-- Table: DepT√©cnico
+CREATE TABLE DepT√©cnico (T√©cnico REFERENCES T√©cnico (NIF), Departamento REFERENCES Departamento (Designa√ß√£o), PRIMARY KEY (T√©cnico, Departamento));
 
 -- Table: DiaEnfermeiro
 CREATE TABLE DiaEnfermeiro (DiaTrabalho REFERENCES DiaTrabalho (Dia), Enfermeiro REFERENCES Enfermeiro (NIF), PRIMARY KEY (DiaTrabalho, Enfermeiro));
 
--- Table: DiaFuncion·rio
-CREATE TABLE DiaFuncion·rio (Dia REFERENCES DiaTrabalho (Dia), Funcion·rio REFERENCES Funcion·rio, PRIMARY KEY (Dia, Funcion·rio));
+-- Table: DiaFuncion√°rio
+CREATE TABLE DiaFuncion√°rio (Dia REFERENCES DiaTrabalho (Dia), Funcion√°rio REFERENCES Funcion√°rio, PRIMARY KEY (Dia, Funcion√°rio));
 
--- Table: DiaMÈdico
+-- Table: DiaM√©dico
 CREATE TABLE DiaMedico (Dia REFERENCES DiaTrabalho (Dia), Medico REFERENCES Medico (NIF), PRIMARY KEY (Dia, Medico));
 
 -- Table: DiaTrabalho
-CREATE TABLE DiaTrabalho (HoraInicio TIME, DuraÁ„o INTEGER, HoraFim TIME CHECK (HoraInicio < HoraFim), Dia INTEGER PRIMARY KEY);
+CREATE TABLE DiaTrabalho (HoraInicio TIME, Dura√ß√£o INTEGER, HoraFim TIME CHECK (HoraInicio < HoraFim), Dia INTEGER PRIMARY KEY);
 
--- Table: DiaTÈcnico
-CREATE TABLE DiaTÈcnico (DiaTrabalho REFERENCES DiaTrabalho (Dia), TÈcnico REFERENCES TÈcnico (NIF), PRIMARY KEY (DiaTrabalho, TÈcnico));
+-- Table: DiaT√©cnico
+CREATE TABLE DiaT√©cnico (DiaTrabalho REFERENCES DiaTrabalho (Dia), T√©cnico REFERENCES T√©cnico (NIF), PRIMARY KEY (DiaTrabalho, T√©cnico));
 
 -- Table: Enfermeiro
-CREATE TABLE Enfermeiro (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, TelemÛvel INTEGER, Departamento REFERENCES Departamento (DesignaÁ„o));
+CREATE TABLE Enfermeiro (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telem√≥vel INTEGER, Departamento REFERENCES Departamento (Designa√ß√£o));
 
 -- Table: Especialidde
-CREATE TABLE Especialidde (Sigla TEXT PRIMARY KEY,DesignaÁ„o TEXT , MedicoChefe REFERENCES Medico (NIF));
+CREATE TABLE Especialidde (Sigla TEXT PRIMARY KEY,Designa√ß√£o TEXT , MedicoChefe REFERENCES Medico (NIF));
 
 INSERT INTO Especialidade VALUES('CARD', 'CARDIOLOGIA', 258912);
 INSERT INTO Especialidade VALUES('OFTA', 'OFTALMOLOGIA', 258910);
@@ -57,14 +57,20 @@ INSERT INTO Especialidade VALUES('OFTA', 'OFTALMOLOGIA', 258910);
 -- Table: Exame
 CREATE TABLE Exame (ExameIdent INTEGER PRIMARY KEY, Dia INTEGER, HoraInicio TIME, HoraFim TIME CHECK (HoraInicio < HoraFim), Resultado STRING, Consulta REFERENCES Consulta (ConsultaIdent), Exame REFERENCES TipoExame);
 
--- Table: Funcion·rio
-CREATE TABLE Funcion·rio (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, TelemÛvel INTEGER);
+INSERT INTO Exame VALUES (0, 2, 1220, 1630, 'Mau', 1, 'teste1');
+INSERT INTO Exame VALUES (1, 2, 1220, 1630, 'Mau', 1, 'teste1');
+INSERT INTO Exame VALUES (2, 2, 1220, 1630, 'Mau', 2, 'teste2');
+INSERT INTO Exame VALUES (3, 2, 1220, 1630, 'Mau', 2, 'teste2');
+INSERT INTO Exame VALUES (4, 2, 1220, 1630, 'Mau', 2, 'teste2');
+
+-- Table: Funcion√°rio
+CREATE TABLE Funcion√°rio (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telem√≥vel INTEGER);
 
 -- Table: Limpeza
-CREATE TABLE Limpeza (Funcion·rio REFERENCES Funcion·rio (NIF), SalaExame REFERENCES SalaExame (ID), PRIMARY KEY (Funcion·rio, SalaExame));
+CREATE TABLE Limpeza (Funcion√°rio REFERENCES Funcion√°rio (NIF), SalaExame REFERENCES SalaExame (ID), PRIMARY KEY (Funcion√°rio, SalaExame));
 
--- Table: MÈdico
-CREATE TABLE Medico (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, TelemÛvel INTEGER, Especialidade REFERENCES Especialidade (Sigla));
+-- Table: M√©dico
+CREATE TABLE Medico (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telem√≥vel INTEGER, Especialidade REFERENCES Especialidade (Sigla));
 
 INSERT INTO Medico VALUES ('Orlando Mendes', '40', 1970, 258909, 919028760, 'CARD');
 INSERT INTO Medico VALUES ('Miguel Vaz', '41', 1960, 258910, 919028799, 'OFTA');
@@ -73,7 +79,7 @@ INSERT INTO Medico VALUES ('Joana Carvalho', '52', 1980, 258912, 919028800, 'CAR
 INSERT INTO Medico VALUES ('Bernardo Martins', '52', 1980, 258913, 919028800, 'CARD');
 
 -- Table: Paciente
-CREATE TABLE Paciente (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, TelemÛvel INTEGER, SeguroIdent REFERENCES Seguro (SeguroIdent));
+CREATE TABLE Paciente (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telem√≥vel INTEGER, SeguroIdent REFERENCES Seguro (SeguroIdent));
 
 INSERT INTO Paciente VALUES ('Bernardo Martins', '21', 1996, 258908, 919028762, 100001);
 INSERT INTO Paciente VALUES ('Susana Melo', '30', 1981, 258907, 919028300, 100002);
@@ -83,7 +89,7 @@ INSERT INTO Paciente VALUES ('Joana Carvalho', '30', 1981, 258906, 919028300, 10
 CREATE TABLE SalaExame (ID INTEGER PRIMARY KEY, HoraLimpeza INT);
 
 -- Table: SalaTipo
-CREATE TABLE SalaTipo (TipoExame REFERENCES TipoExame (DesignaÁao), SalaExame REFERENCES SalaExame (ID), PRIMARY KEY (TipoExame, SalaExame));
+CREATE TABLE SalaTipo (TipoExame REFERENCES TipoExame (Designa√ßao), SalaExame REFERENCES SalaExame (ID), PRIMARY KEY (TipoExame, SalaExame));
 
 -- Table: Seguro
 CREATE TABLE Seguro (SeguroIdent INTEGER PRIMARY KEY, Seguradora TEXT, DataValidade DATE CHECK (DataValidade > 2017), Tipo TEXT, Cobertura INTEGER);
@@ -91,10 +97,12 @@ CREATE TABLE Seguro (SeguroIdent INTEGER PRIMARY KEY, Seguradora TEXT, DataValid
 INSERT INTO Seguro VALUES (100001, 'ADSE', 2020, 'COMPLETO', 250);
 
 -- Table: TipoExame
-CREATE TABLE TipoExame (DesignaÁao TEXT PRIMARY KEY);
+CREATE TABLE TipoExame (Designa√ßao TEXT PRIMARY KEY);
 
--- Table: TÈcnico
-CREATE TABLE TÈcnico (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, TelemÛvel INTEGER);
+INSERT INTO TipoExame VALUES ('teste');
+
+-- Table: T√©cnico
+CREATE TABLE T√©cnico (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telem√≥vel INTEGER);
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;
