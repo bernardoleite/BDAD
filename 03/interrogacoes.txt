@@ -9,7 +9,7 @@ SELECT Nome FROM Paciente
 WHERE Seguro NOT IN 
 (SELECT SeguroIdent From Seguro);
 
-3- Qual é a duração média das Consultas de determinada Especialidade?
+3- Qual é a duração média das Consultas da Especialidade de Cardiologia?
 
 SELECT AVG(HoraFim-HoraInicio) 
 FROM Consulta WHERE Consulta.Medico = 
@@ -19,7 +19,7 @@ FROM Consulta WHERE Consulta.Medico =
 
 SELECT Nome FROM Medico INTERSECT SELECT Nome FROM Paciente;
 
-5- Quais as consultas do médico X nos próximos 3 dias?
+5- Quais as consultas do médico Bernardo Martins nos próximos 3 dias?
 
 SELECT Consulta.Dia FROM Consulta WHERE Consulta.Medico =
 (SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico INTERSECT 

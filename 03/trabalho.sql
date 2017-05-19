@@ -49,7 +49,7 @@ CREATE TABLE DiaTécnico (DiaTrabalho REFERENCES DiaTrabalho (Dia), Técnico REF
 CREATE TABLE Enfermeiro (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER, Departamento REFERENCES Departamento (Designação));
 
 -- Table: Especialidde
-CREATE TABLE Especialidde (Sigla TEXT PRIMARY KEY,Designação TEXT , MedicoChefe REFERENCES Medico (NIF));
+CREATE TABLE Especialidade (Sigla TEXT PRIMARY KEY,Designação TEXT , MedicoChefe REFERENCES Medico (NIF));
 
 INSERT INTO Especialidade VALUES('CARD', 'CARDIOLOGIA', 258912);
 INSERT INTO Especialidade VALUES('OFTA', 'OFTALMOLOGIA', 258910);
