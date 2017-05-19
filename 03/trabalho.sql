@@ -7,9 +7,13 @@ PRAGMA foreign_keys = off;
 BEGIN TRANSACTION;
 
 -- Table: Consulta
-CREATE TABLE Consulta (ConsultaIdent INTEGER PRIMARY KEY, Dia INTEGER, HoraInicio TIME, HoraFim TIME CHECK (HoraInicio < HoraFim), Paciente REFERENCES Paciente (NIF), Médico REFERENCES Médico (NIF), Enfermeiro REFERENCES Enfermeiro (NIF) UNIQUE, UNIQUE (Dia, Paciente, Médico));
-INSERT INTO Consulta VALUES (1, 31, 12, 13, 258908, 258909, NULL);
-INSERT INTO Consulta VALUES (2, 1, 12, 12.30, 258907, 258910, NULL);
+CREATE TABLE Consulta (ConsultaIdent INTEGER PRIMARY KEY, Dia DATE, HoraInicio TIME, HoraFim TIME CHECK (HoraInicio < HoraFim), Paciente REFERENCES Paciente (NIF), Medico REFERENCES Medico (NIF), Enfermeiro REFERENCES Enfermeiro (NIF) UNIQUE, UNIQUE (Dia, Paciente, Medico));
+INSERT INTO Consulta VALUES (1, '2017-05-16', 12, 13, 258908, 258909, NULL);
+INSERT INTO Consulta VALUES (2, '2017-05-16', 12, 12.30, 258907, 258910, NULL);
+INSERT INTO Consulta VALUES (3, '2017-05-18', 12.30, 13.30, 258907, 258913, NULL);
+INSERT INTO Consulta VALUES (4, '2017-05-19', 12, 12.30, 258908, 258912, NULL);
+INSERT INTO Consulta VALUES (5, '2017-05-19', 13, 14.30, 258906, 258913, NULL);
+
 -- Table: Departamento
 CREATE TABLE Departamento (Designacao TEXT PRIMARY KEY);
 
@@ -33,7 +37,7 @@ CREATE TABLE DiaEnfermeiro (DiaTrabalho REFERENCES DiaTrabalho (Dia), Enfermeiro
 CREATE TABLE DiaFuncionário (Dia REFERENCES DiaTrabalho (Dia), Funcionário REFERENCES Funcionário, PRIMARY KEY (Dia, Funcionário));
 
 -- Table: DiaMédico
-CREATE TABLE DiaMédico (Dia REFERENCES DiaTrabalho (Dia), Médico REFERENCES Médico (NIF), PRIMARY KEY (Dia, Médico));
+CREATE TABLE DiaMedico (Dia REFERENCES DiaTrabalho (Dia), Medico REFERENCES Medico (NIF), PRIMARY KEY (Dia, Medico));
 
 -- Table: DiaTrabalho
 CREATE TABLE DiaTrabalho (HoraInicio TIME, Duração INTEGER, HoraFim TIME CHECK (HoraInicio < HoraFim), Dia INTEGER PRIMARY KEY);
@@ -45,7 +49,7 @@ CREATE TABLE DiaTécnico (DiaTrabalho REFERENCES DiaTrabalho (Dia), Técnico REFER
 CREATE TABLE Enfermeiro (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER, Departamento REFERENCES Departamento (Designação));
 
 -- Table: Especialidde
-CREATE TABLE Especialidde (Designação TEXT PRIMARY KEY, MédicoChefe REFERENCES Médico (NIF));
+CREATE TABLE Especialidde (Designação TEXT PRIMARY KEY, MedicoChefe REFERENCES Medico (NIF));
 
 -- Table: Exame
 CREATE TABLE Exame (ExameIdent INTEGER PRIMARY KEY, Dia INTEGER, HoraInicio TIME, HoraFim TIME CHECK (HoraInicio < HoraFim), Resultado STRING, Consulta REFERENCES Consulta (ConsultaIdent), Exame REFERENCES TipoExame);
@@ -59,15 +63,18 @@ CREATE TABLE Limpeza (Funcionário REFERENCES Funcionário (NIF), SalaExame REFERE
 -- Table: Médico
 CREATE TABLE Medico (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER, Especialidade REFERENCES Especialidade (Designacao));
 
-INSERT INTO Medico VALUES ('Doutor(a) Orlando Mendes', '40', 1970, 258909, 919028760, 'CARDIOLOGIA');
-INSERT INTO Medico VALUES ('Doutor(a) Miguel Vaz', '41', 1960, 258910, 919028799, 'OFTALMOLOGIA');
-INSERT INTO Medico VALUES ('Doutor(a) Rita Malaco', '32', 1980, 258911, 919028800, 'OFTALMOLOGIA');
+INSERT INTO Medico VALUES ('Orlando Mendes', '40', 1970, 258909, 919028760, 'CARDIOLOGIA');
+INSERT INTO Medico VALUES ('Miguel Vaz', '41', 1960, 258910, 919028799, 'OFTALMOLOGIA');
+INSERT INTO Medico VALUES ('Rita Malaco', '32', 1980, 258911, 919028800, 'OFTALMOLOGIA');
+INSERT INTO Medico VALUES ('Joana Carvalho', '52', 1980, 258912, 919028800, 'CARDIOLOGIA');
+INSERT INTO Medico VALUES ('Bernardo Martins', '52', 1980, 258913, 919028800, 'CARDIOLOGIA');
 
 -- Table: Paciente
 CREATE TABLE Paciente (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER, SeguroIdent REFERENCES Seguro (SeguroIdent));
 
 INSERT INTO Paciente VALUES ('Bernardo Martins', '21', 1996, 258908, 919028762, 100001);
 INSERT INTO Paciente VALUES ('Susana Melo', '30', 1981, 258907, 919028300, 100002);
+INSERT INTO Paciente VALUES ('Joana Carvalho', '30', 1981, 258906, 919028300, 100003);
 
 -- Table: SalaExame
 CREATE TABLE SalaExame (ID INTEGER PRIMARY KEY, HoraLimpeza INT);
