@@ -5,14 +5,15 @@ WHERE Medico.Especialidade = 'OFTALMOLOGIA';
 
 2 - Qual o nome dos pacientes que não têm Seguro Ativado?
 
-SELECT Nome FROM Paciente
-    WHERE Seguro NOT IN
-    (SELECT SeguroIdent From Seguro);
+SELECT Nome FROM Paciente 
+WHERE Seguro NOT IN 
+(SELECT SeguroIdent From Seguro);
 
 3- Qual é a duração média das Consultas de determinada Especialidade?
 
-SELECT nome, AVG(HoraFim-HoraInicio)
-FROM (SELECT nome, )
+SELECT AVG(HoraFim-HoraInicio) 
+FROM Consulta WHERE Consulta.Medico = 
+(SELECT distinct NIF FROM Medico WHERE Medico.Especialidade = ‘CARD’);
 
 4- Quais os nomes comuns a médicos e pacientes? (Perg 3)
 
@@ -20,11 +21,14 @@ SELECT Nome FROM Medico INTERSECT SELECT Nome FROM Paciente;
 
 5- Quais as consultas do médico X nos próximos 3 dias?
 
-SELECT Dia FROM Consulta WHERE
-(SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico) AND
-(SELECT Dia FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+3 day') >= Consulta.Dia)
+SELECT Consulta.Dia FROM Consulta WHERE Consulta.Medico =
+(SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico INTERSECT 
+SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+3 day') >= Consulta.Dia);
+
 
 6- Qual o funcionário com maior dia de trabalho?
+
+
 
 7- Qual a sala mais usada para se realizar exames?
 
