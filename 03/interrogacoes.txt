@@ -34,6 +34,8 @@ SELECT Dia FROM Consulta WHERE
 
 10- Qual o número máximo de exames marcados numa consulta?
 
+SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) FROM Exame);
+
 11- Qual a média de exames marcados para cada tipo de exame?
 
 12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ? 
