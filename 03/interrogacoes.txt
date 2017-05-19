@@ -32,7 +32,9 @@ SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+
 
 7- Qual a sala mais usada para se realizar exames?
 
-8- Qual o nome de cada médico chefe de cada especialidade? 
+8- Qual o nome o médico chefe de cada especialidade? 
+
+SELECT Nome, Sigla FROM Medico, Especialidade WHERE Medico.NIF = Especialidade.MedicoChefe;
 
 9- Qual o número de exames médio por paciente? (Perg 14)
 
