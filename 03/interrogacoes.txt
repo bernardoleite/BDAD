@@ -58,3 +58,5 @@ SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) F
 
 18 - Quais os funcionários que trabalham nos mesmos dias (para cada dia indicar todos os trabalhadores independentemente da categoria)
 
+19 - Verificar se no dia 22-05-2017 o médico chefe da especialidade de cardiologia está de serviço?
+
