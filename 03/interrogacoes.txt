@@ -28,7 +28,6 @@ SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+
 
 6- Qual o funcionário com maior dia de trabalho?
 
-//Maxima Duração conseguida
 SELECT Funcionario, MAX(Duração) FROM DiaTrabalho, DiaFuncionario 
 WHERE DiaTrabalho.Ident = DiaFuncionario.Ident
 
@@ -46,4 +45,18 @@ SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) F
 11- Qual a média de exames marcados para cada tipo de exame?
 
 12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ? 
+
+13 - Quais os pacientes que fizeram 2vezes o mesmo exame?
+
+14 - Quais os exames em que o médico responsável por ele é o mesmo médico da consulta?
+
+15 -  A média de recursos Humanos para cada tipo de exame?
+
+16 - Qual o exame mais comum prescrita por cada especialidade médica?
+
+17 - Quais os tipos de exames que são feitos em mais de 3 salas diferentes?
+
+18 - Quais os funcionários que trabalham nos mesmos dias (para cada dia indicar todos os trabalhadores independentemente da categoria)
+
+19 - Verificar se no dia 22-05-2017 o médico chefe da especialidade de cardiologia está de serviço?
 
