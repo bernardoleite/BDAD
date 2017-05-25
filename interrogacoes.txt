@@ -1,0 +1,49 @@
+1- Quais os nomes dos médicos que dão consultas da especialidade OFTALMOLOGIA? 
+
+SELECT distinct nome FROM Medico
+WHERE Medico.Especialidade = 'OFTALMOLOGIA';
+
+2 - Qual o nome dos pacientes que não têm Seguro Ativado?
+
+SELECT Nome FROM Paciente 
+WHERE Seguro NOT IN 
+(SELECT SeguroIdent From Seguro);
+
+3- Qual é a duração média das Consultas da Especialidade de Cardiologia?
+
+SELECT AVG(HoraFim-HoraInicio) 
+FROM Consulta WHERE Consulta.Medico = 
+(SELECT distinct NIF FROM Medico WHERE Medico.Especialidade = ‘CARD’);
+
+4- Quais os nomes comuns a médicos e pacientes? (Perg 3)
+
+SELECT Nome FROM Medico INTERSECT SELECT Nome FROM Paciente;
+
+5- Quais as consultas do médico Bernardo Martins nos próximos 3 dias?
+
+SELECT Consulta.Dia FROM Consulta WHERE Consulta.Medico =
+(SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico INTERSECT 
+SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+3 day') >= Consulta.Dia);
+
+
+6- Qual o funcionário com maior dia de trabalho?
+
+//Maxima Duração conseguida
+SELECT Funcionario, MAX(Duração) FROM DiaTrabalho, DiaFuncionario 
+WHERE DiaTrabalho.Ident = DiaFuncionario.Ident
+
+
+7- Qual a sala mais usada para se realizar exames?
+
+8- Qual o nome de cada médico chefe de cada especialidade? 
+
+9- Qual o número de exames médio por paciente? (Perg 14)
+
+10- Qual o número máximo de exames marcados numa consulta?
+
+SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) FROM Exame);
+
+11- Qual a média de exames marcados para cada tipo de exame?
+
+12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ? 
+
