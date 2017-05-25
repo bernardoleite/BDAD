@@ -25,7 +25,7 @@ INSERT INTO Departamento VALUES ('OTORRINOLARINGOLOGIA');
 CREATE TABLE DepEnfermeiro (Enfermeiro REFERENCES Enfermeiro (NIF), Departamento REFERENCES Departamento (Designação), PRIMARY KEY (Enfermeiro, Departamento));
 
 -- Table: DepFuncionário
-CREATE TABLE DepFuncionário (Funcionário REFERENCES Funcionário (NIF), Departamento REFERENCES Departamento (Designação), PRIMARY KEY (Funcionário, Departamento));
+CREATE TABLE DepFuncionario (Funcionario REFERENCES Funcionario (NIF), Departamento REFERENCES Departamento (Designação), PRIMARY KEY (Funcionario, Departamento));
 
 -- Table: DepTécnico
 CREATE TABLE DepTécnico (Técnico REFERENCES Técnico (NIF), Departamento REFERENCES Departamento (Designação), PRIMARY KEY (Técnico, Departamento));
@@ -34,13 +34,32 @@ CREATE TABLE DepTécnico (Técnico REFERENCES Técnico (NIF), Departamento REFER
 CREATE TABLE DiaEnfermeiro (DiaTrabalho REFERENCES DiaTrabalho (Dia), Enfermeiro REFERENCES Enfermeiro (NIF), PRIMARY KEY (DiaTrabalho, Enfermeiro));
 
 -- Table: DiaFuncionário
-CREATE TABLE DiaFuncionário (Dia REFERENCES DiaTrabalho (Dia), Funcionário REFERENCES Funcionário, PRIMARY KEY (Dia, Funcionário));
+CREATE TABLE DiaFuncionario (Ident REFERENCES DiaTrabalho (Ident), Funcionario REFERENCES Funcionario (NIF), PRIMARY KEY (Ident, Funcionario));
 
+INSERT INTO DiaFuncionario VALUES (0, 258900);
+INSERT INTO DiaFuncionario VALUES (1, 258900);
+INSERT INTO DiaFuncionario VALUES (2, 258900);
+INSERT INTO DiaFuncionario VALUES (3, 258901);
+INSERT INTO DiaFuncionario VALUES (4, 258901);
+INSERT INTO DiaFuncionario VALUES (5, 258901);
+INSERT INTO DiaFuncionario VALUES (6, 258902);
+INSERT INTO DiaFuncionario VALUES (7, 258902);
+
+	
 -- Table: DiaMédico
 CREATE TABLE DiaMedico (Dia REFERENCES DiaTrabalho (Dia), Medico REFERENCES Medico (NIF), PRIMARY KEY (Dia, Medico));
 
 -- Table: DiaTrabalho
-CREATE TABLE DiaTrabalho (HoraInicio TIME, Duração INTEGER, HoraFim TIME CHECK (HoraInicio < HoraFim), Dia INTEGER PRIMARY KEY);
+CREATE TABLE DiaTrabalho (HoraInicio TIME, Duração INTEGER, HoraFim TIME CHECK (HoraInicio < HoraFim), Dia DATE, Ident INTEGER PRIMARY KEY);
+
+INSERT INTO DiaTrabalho VALUES(08.00, 4, 12.00, '2017-05-19', 0);
+INSERT INTO DiaTrabalho VALUES(08.00, 5, 13.00, '2017-05-20', 1);
+INSERT INTO DiaTrabalho VALUES(08.30, 4, 12.30, '2017-05-21', 2);
+INSERT INTO DiaTrabalho VALUES(12.30, 6, 18.30, '2017-05-19', 3);
+INSERT INTO DiaTrabalho VALUES(13.30, 7, 20.30, '2017-05-20', 4);
+INSERT INTO DiaTrabalho VALUES(13.00, 8, 21.00, '2017-05-21', 5);
+INSERT INTO DiaTrabalho VALUES(08.00, 12, 20.00, '2017-05-21', 6);
+INSERT INTO DiaTrabalho VALUES(10.00, 8, 18.00, '2017-05-21', 7);
 
 -- Table: DiaTécnico
 CREATE TABLE DiaTécnico (DiaTrabalho REFERENCES DiaTrabalho (Dia), Técnico REFERENCES Técnico (NIF), PRIMARY KEY (DiaTrabalho, Técnico));
@@ -64,10 +83,14 @@ INSERT INTO Exame VALUES (3, 2, 1220, 1630, 'Mau', 2, 'teste2');
 INSERT INTO Exame VALUES (4, 2, 1220, 1630, 'Mau', 2, 'teste2');
 
 -- Table: Funcionário
-CREATE TABLE Funcionário (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER);
+CREATE TABLE Funcionario (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER);
+
+INSERT INTO Funcionario	VALUES ('Francisco Carneiro', 27, 1990, 258900, 919028750);
+INSERT INTO Funcionario	VALUES ('Maria Coelho', 32, 1985, 258901, 919028751);
+INSERT INTO Funcionario	VALUES ('Alvaro Caetano', 29, 1988, 258902, 919028752);
 
 -- Table: Limpeza
-CREATE TABLE Limpeza (Funcionário REFERENCES Funcionário (NIF), SalaExame REFERENCES SalaExame (ID), PRIMARY KEY (Funcionário, SalaExame));
+CREATE TABLE Limpeza (Funcionario REFERENCES Funcionario (NIF), SalaExame REFERENCES SalaExame (ID), PRIMARY KEY (Funcionario, SalaExame));
 
 -- Table: Médico
 CREATE TABLE Medico (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER, Especialidade REFERENCES Especialidade (Sigla));
