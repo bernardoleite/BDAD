@@ -1,31 +1,31 @@
 1- Quais os nomes dos médicos que dão consultas da especialidade OFTALMOLOGIA? 
 
 SELECT distinct nome FROM Medico
-WHERE Medico.Especialidade = 'OFTALMOLOGIA';
+WHERE Medico.Especialidade = 'OFTA';
 
-2 - Qual o nome dos pacientes que não têm Seguro Ativado?
+2 - Qual o nome dos pacientes que não têm Seguro Ativado? ------> Na 2a linha mudei para SeguroIdent em vez de Seguro < --------
 
 SELECT Nome FROM Paciente 
-WHERE Seguro NOT IN 
+WHERE SeguroIdent NOT IN 
 (SELECT SeguroIdent From Seguro);
 
 3- Qual é a duração média das Consultas da Especialidade de Cardiologia?
 
 SELECT AVG(HoraFim-HoraInicio) 
 FROM Consulta WHERE Consulta.Medico = 
-(SELECT distinct NIF FROM Medico WHERE Medico.Especialidade = ‘CARD’);
+(SELECT distinct NIF FROM Medico WHERE Medico.Especialidade = 'CARD');
 
 4- Quais os nomes comuns a médicos e pacientes? (Perg 3)
 
 SELECT Nome FROM Medico INTERSECT SELECT Nome FROM Paciente;
 
-5- Quais as consultas do médico Bernardo Martins nos próximos 3 dias?
+5- Quais as consultas do médico Bernardo Martins nos próximos 3 dias? ------> Mudar datas para que funcione <--------
 
 SELECT Consulta.Dia FROM Consulta WHERE Consulta.Medico =
 (SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico INTERSECT 
 SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+3 day') >= Consulta.Dia);
 
-6- Qual o funcionário com maior dia de trabalho?
+6- Qual o funcionário com maior dia de trabalho? ------>Aqui mostra o NIF do funcionário e não o nome<----------
 
 SELECT Funcionario, MAX(Duração) FROM DiaTrabalho, DiaFuncionario 
 WHERE DiaTrabalho.Ident = DiaFuncionario.Ident;
@@ -46,24 +46,23 @@ HAVING COUNT(*) = (
 
 8- Qual o nome de cada médico chefe de cada especialidade? 
 
-SELECT Sigla, Nome FROM Especialidade, Medico WHERE MedicoChefe = Medico.NIF
+SELECT Sigla, Nome FROM Especialidade, Medico WHERE MedicoChefe = Medico.NIF;
 
-9- Qual o número de exames médio por paciente? (Perg 14)
+9- Qual o número de exames médio por paciente? (Perg 14) ---------> Francisco Falta Inserir <-----------
 
-10- Qual o número máximo de exames marcados numa consulta?
+10- Qual é o número máximo de exames marcados numa consulta?
 
 SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) FROM Exame);
 
-11- Qual a média de exames marcados para cada tipo de exame?
+11- Qual a média de exames marcados para cada tipo de exame? ---------> Não funciona <--------------
 
 SELECT TipoExame, count(*) as sum FROM Exame GROUP BY TipoExame;
 
-12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ?
+12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ? --------> Voltar a ver <-------------
 
-SELECT sum  (CASE WHEN Medico IS NOT NULL THEN 1 ELSE 0 END) countMed ,
+/*SELECT sum  (CASE WHEN Medico IS NOT NULL THEN 1 ELSE 0 END) countMed ,
  sum  (CASE WHEN Enfermeiro IS NOT NULL THEN 1 ELSE 0 END) countEnf,
- sum  (CASE WHEN Tecnico IS NOT NULL THEN 1 ELSE 0 END) countTec FROM Exame;
-
+ sum  (CASE WHEN Tecnico IS NOT NULL THEN 1 ELSE 0 END) countTec FROM Exame;*/
 
  CREATE VIEW VALORES_VIEW AS
 SELECT (SELECT 
@@ -71,15 +70,12 @@ sum  (CASE WHEN Medico IS NOT NULL THEN 1 ELSE 0 END)) med,
 (sum  (CASE WHEN Enfermeiro IS NOT NULL THEN 1 ELSE 0 END)) enf,
 (sum  (CASE WHEN Tecnico IS NOT NULL THEN 1 ELSE 0 END)) tec
 FROM Exame;
-
 SELECT CASE WHEN (SELECT MIN(med) FROM VALORES_VIEW) > (SELECT MIN(enf) FROM VALORES_VIEW ) AND
 (SELECT MIN(med) FROM VALORES_VIEW) > (SELECT MIN(tec) FROM VALORES_VIEW )
  THEN (SELECT "São os Médicos") END;
-
  SELECT CASE WHEN (SELECT MIN(enf) FROM VALORES_VIEW) > (SELECT MIN(med) FROM VALORES_VIEW ) AND
 (SELECT MIN(enf) FROM VALORES_VIEW) > (SELECT MIN(tec) FROM VALORES_VIEW )
  THEN (SELECT "São os Enfermeiros") END;
-
  SELECT CASE WHEN (SELECT MIN(tec) FROM VALORES_VIEW) > (SELECT MIN(med) FROM VALORES_VIEW ) AND
 (SELECT MIN(tec) FROM VALORES_VIEW) > (SELECT MIN(enf) FROM VALORES_VIEW )
  THEN (SELECT "São os Técnicos") END;
