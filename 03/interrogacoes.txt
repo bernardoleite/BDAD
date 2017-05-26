@@ -102,6 +102,8 @@ SELECT Especialidade, MAX(distinct TipoExame) FROM (SELECT TipoExame, Especialid
 
 16 - Quais os tipos de exames que são feitos em mais de 3 salas diferentes?
 
+SELECT TipoExame, COUNT(*) as c FROM SalaTipo GROUP BY TipoExame having c > 3;
+
 17 - Quais os funcionários que trabalham nos mesmos dias (para cada dia indicar todos os trabalhadores independentemente da categoria)
 
 18 - Verificar se no dia 22-05-2017 o médico chefe da especialidade de cardiologia está de serviço?

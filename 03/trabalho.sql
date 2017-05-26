@@ -131,6 +131,12 @@ CREATE TABLE SalaTipo (TipoExame REFERENCES TipoExame (Designaçao), SalaExame R
 INSERT INTO SalaTipo VALUES ('RaioX', 1001);
 INSERT INTO SalaTipo VALUES ('Eletrocardiograma', 1001);
 INSERT INTO SalaTipo VALUES ('RaioX', 1002);
+INSERT INTO SalaTipo VALUES ('RaioX', 1003);
+INSERT INTO SalaTipo VALUES ('RaioX', 1004);
+INSERT INTO SalaTipo VALUES ('Ressonancia', 1001);
+INSERT INTO SalaTipo VALUES ('Ressonancia', 1002);
+INSERT INTO SalaTipo VALUES ('Ressonancia', 1004);
+INSERT INTO SalaTipo VALUES ('Ressonancia', 1005);
 
 -- Table: Seguro
 CREATE TABLE Seguro (SeguroIdent INTEGER PRIMARY KEY, Seguradora TEXT, DataValidade DATE CHECK (DataValidade > 2017), Tipo TEXT, Cobertura INTEGER);
