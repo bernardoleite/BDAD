@@ -81,13 +81,14 @@ INSERT INTO Especialidade VALUES('CARD', 'CARDIOLOGIA', 258912);
 INSERT INTO Especialidade VALUES('OFTA', 'OFTALMOLOGIA', 258910);
 
 -- Table: Exame
-CREATE TABLE Exame (ExameIdent INTEGER PRIMARY KEY, Dia INTEGER, HoraInicio TIME, HoraFim TIME CHECK (HoraInicio < HoraFim), Resultado STRING, Consulta REFERENCES Consulta (ConsultaIdent), TipoExame REFERENCES TipoExame, , Medico REFERENCES Medico (NIF), Enfermeiro REFERENCES Enfermeiro (NIF), Tecnico REFERENCES Tecnico (NIF));
+CREATE TABLE Exame (ExameIdent INTEGER PRIMARY KEY, Dia INTEGER, HoraInicio TIME, HoraFim TIME CHECK (HoraInicio < HoraFim), Resultado STRING, Consulta REFERENCES Consulta (ConsultaIdent), TipoExame REFERENCES TipoExame, Medico REFERENCES Medico (NIF), Enfermeiro REFERENCES Enfermeiro (NIF), Tecnico REFERENCES Tecnico (NIF));
 
 INSERT INTO Exame VALUES (0, 2, 1220, 1630, 'Mau', 1, 'RaioX', 258909, NULL, NULL);
 INSERT INTO Exame VALUES (1, 2, 1220, 1630, 'Mau', 1, 'Ressonancia', 258910, NULL, NULL);
 INSERT INTO Exame VALUES (2, 2, 1220, 1630, 'Mau', 2, 'RaioX', 258913, NULL, NULL);
 INSERT INTO Exame VALUES (3, 2, 1220, 1630, 'Mau', 2, 'Ressonancia', NULL, 156790, NULL);
 INSERT INTO Exame VALUES (4, 2, 1220, 1630, 'Mau', 2, 'Eletrocardiograma', NULL, 156790, NULL);
+INSERT INTO Exame VALUES (5, 2, 1220, 1630, 'Mau', 4, 'RaioX', NULL, 156790, NULL);
 
 -- Table: Funcionário
 CREATE TABLE Funcionario (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER);

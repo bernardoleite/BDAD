@@ -3,7 +3,7 @@
 SELECT distinct nome FROM Medico
 WHERE Medico.Especialidade = 'OFTA';
 
-2 - Qual o nome dos pacientes que não têm Seguro Ativado? ------> Na 2a linha mudei para SeguroIdent em vez de Seguro < --------
+2 - Qual o nome dos pacientes que não têm Seguro Ativado?
 
 SELECT Nome FROM Paciente 
 WHERE SeguroIdent NOT IN 
@@ -25,7 +25,7 @@ SELECT Consulta.Dia FROM Consulta WHERE Consulta.Medico =
 (SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico INTERSECT 
 SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+3 day') >= Consulta.Dia);
 
-6- Qual o funcionário com maior dia de trabalho? ------>Aqui mostra o NIF do funcionário e não o nome<----------
+6- Qual o funcionário com maior dia de trabalho? 
 
 SELECT Funcionario, MAX(Duração) FROM DiaTrabalho, DiaFuncionario 
 WHERE DiaTrabalho.Ident = DiaFuncionario.Ident;
@@ -48,13 +48,15 @@ HAVING COUNT(*) = (
 
 SELECT Sigla, Nome FROM Especialidade, Medico WHERE MedicoChefe = Medico.NIF;
 
-9- Qual o número de exames médio por paciente? (Perg 14) ---------> Francisco Falta Inserir <-----------
+9- Qual o número de exames médio por paciente? (Perg 14)
+
+SELECT CAST((SELECT COUNT (*) FROM Exame) AS FLOAT) / (SELECT COUNT (*) FROM Paciente);
 
 10- Qual é o número máximo de exames marcados numa consulta?
 
 SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) FROM Exame);
 
-11- Qual a média de exames marcados para cada tipo de exame? ---------> Não funciona <--------------
+11- Quantos exames foram marcados para cada tipo de exame?
 
 SELECT TipoExame, count(*) as sum FROM Exame GROUP BY TipoExame;
 
@@ -81,19 +83,28 @@ SELECT CASE WHEN (SELECT MIN(med) FROM VALORES_VIEW) > (SELECT MIN(enf) FROM VAL
  THEN (SELECT "São os Técnicos") END;
  
 
-13 - Quais os pacientes que fizeram 2vezes o mesmo exame?
+13 - Quais os pacientes que fizeram 2vezes o mesmo exame? -------------> Ainda não funciona :x
+
+SELECT Paciente, TipoExame FROM 
+(SELECT Paciente , TipoExame 
+FROM Consulta 
+INNER JOIN Exame ON Consulta.ConsultaIdent = Exame.Consulta) GROUP BY TipoExame having COUNT (where Paciente and Name are identical) = 2;
 
 14 - Quais os exames em que o médico responsável por ele é o mesmo médico da consulta?
 
-15 -  A média de recursos Humanos para cada tipo de exame?
+SELECT Exame.Medico, ConsultaIdent FROM Exame, Consulta 
+WHERE Consulta.Medico = Exame.Medico 
+AND Consulta.ConsultaIdent = Exame.Consulta;
 
-16 - Qual o exame mais comum prescrita por cada especialidade médica?
+15 - Qual o exame mais comum prescrita por cada especialidade médica? -----------------> Ainda não funciona :x
 
-17 - Quais os tipos de exames que são feitos em mais de 3 salas diferentes?
+SELECT Especialidade, MAX(distinct TipoExame) FROM (SELECT TipoExame, Especialidade FROM (SELECT Especialidade, ConsultaIdent FROM Medico INNER JOIN Consulta ON Medico.NIF = Consulta.Medico) p INNER JOIN Exame ON p.ConsultaIdent = Exame.Consulta);
 
-18 - Quais os funcionários que trabalham nos mesmos dias (para cada dia indicar todos os trabalhadores independentemente da categoria)
+16 - Quais os tipos de exames que são feitos em mais de 3 salas diferentes?
 
-19 - Verificar se no dia 22-05-2017 o médico chefe da especialidade de cardiologia está de serviço?
+17 - Quais os funcionários que trabalham nos mesmos dias (para cada dia indicar todos os trabalhadores independentemente da categoria)
+
+18 - Verificar se no dia 22-05-2017 o médico chefe da especialidade de cardiologia está de serviço?
 
 CREATE VIEW MEDIC_VIEW AS SELECT(
 SELECT Medico FROM DiaMedico WHERE Medico = 
