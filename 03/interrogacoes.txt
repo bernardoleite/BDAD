@@ -25,16 +25,28 @@ SELECT Consulta.Dia FROM Consulta WHERE Consulta.Medico =
 (SELECT NIF From Medico, Consulta WHERE Nome = 'Bernardo Martins' INTERSECT SELECT Medico FROM Medico, Consulta WHERE Medico.NIF = Consulta.Medico INTERSECT 
 SELECT Medico FROM Consulta WHERE date('now') <= Consulta.Dia AND date('now', '+3 day') >= Consulta.Dia);
 
-
 6- Qual o funcionário com maior dia de trabalho?
 
 SELECT Funcionario, MAX(Duração) FROM DiaTrabalho, DiaFuncionario 
-WHERE DiaTrabalho.Ident = DiaFuncionario.Ident
-
+WHERE DiaTrabalho.Ident = DiaFuncionario.Ident;
 
 7- Qual a sala mais usada para se realizar exames?
+	(Qual a sala que realiza o mais tipos de exame?)
+	
+SELECT SalaExame FROM SalaTipo
+GROUP BY SalaExame
+HAVING COUNT(*) = (
+                   SELECT MAX(Cnt) 
+                   FROM(
+                         SELECT COUNT(*) as Cnt
+                         FROM SalaTipo
+                         GROUP BY SalaExame
+                        ) tmp
+                    );
 
 8- Qual o nome de cada médico chefe de cada especialidade? 
+
+SELECT Sigla, Nome FROM Especialidade, Medico WHERE MedicoChefe = Medico.NIF
 
 9- Qual o número de exames médio por paciente? (Perg 14)
 
@@ -44,7 +56,34 @@ SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) F
 
 11- Qual a média de exames marcados para cada tipo de exame?
 
-12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ? 
+SELECT TipoExame, count(*) as sum FROM Exame GROUP BY TipoExame;
+
+12 - Quem realiza mais exames (médico, enfermeiro ou técnico) ?
+
+SELECT sum  (CASE WHEN Medico IS NOT NULL THEN 1 ELSE 0 END) countMed ,
+ sum  (CASE WHEN Enfermeiro IS NOT NULL THEN 1 ELSE 0 END) countEnf,
+ sum  (CASE WHEN Tecnico IS NOT NULL THEN 1 ELSE 0 END) countTec FROM Exame;
+
+
+ CREATE VIEW VALORES_VIEW AS
+SELECT (SELECT 
+sum  (CASE WHEN Medico IS NOT NULL THEN 1 ELSE 0 END)) med,
+(sum  (CASE WHEN Enfermeiro IS NOT NULL THEN 1 ELSE 0 END)) enf,
+(sum  (CASE WHEN Tecnico IS NOT NULL THEN 1 ELSE 0 END)) tec
+FROM Exame;
+
+SELECT CASE WHEN (SELECT MIN(med) FROM VALORES_VIEW) > (SELECT MIN(enf) FROM VALORES_VIEW ) AND
+(SELECT MIN(med) FROM VALORES_VIEW) > (SELECT MIN(tec) FROM VALORES_VIEW )
+ THEN (SELECT "São os Médicos") END;
+
+ SELECT CASE WHEN (SELECT MIN(enf) FROM VALORES_VIEW) > (SELECT MIN(med) FROM VALORES_VIEW ) AND
+(SELECT MIN(enf) FROM VALORES_VIEW) > (SELECT MIN(tec) FROM VALORES_VIEW )
+ THEN (SELECT "São os Enfermeiros") END;
+
+ SELECT CASE WHEN (SELECT MIN(tec) FROM VALORES_VIEW) > (SELECT MIN(med) FROM VALORES_VIEW ) AND
+(SELECT MIN(tec) FROM VALORES_VIEW) > (SELECT MIN(enf) FROM VALORES_VIEW )
+ THEN (SELECT "São os Técnicos") END;
+ 
 
 13 - Quais os pacientes que fizeram 2vezes o mesmo exame?
 
@@ -59,4 +98,9 @@ SELECT COUNT(Consulta) FROM Exame WHERE Exame.Consulta = (SELECT MAX(Consulta) F
 18 - Quais os funcionários que trabalham nos mesmos dias (para cada dia indicar todos os trabalhadores independentemente da categoria)
 
 19 - Verificar se no dia 22-05-2017 o médico chefe da especialidade de cardiologia está de serviço?
+
+CREATE VIEW MEDIC_VIEW AS SELECT(
+SELECT Medico FROM DiaMedico WHERE Medico = 
+(SELECT MedicoChefe FROM Especialidade WHERE Especialidade.Sigla = 'CARD') AND DiaMedico.Dia ='2017-05-22') aux ;
+SELECT CASE WHEN ((SELECT MIN(aux) FROM MEDIC_VIEW) IS NOT NULL) THEN (SELECT "Está de serviço.") ELSE (SELECT "Não está de serviço") END;
 
