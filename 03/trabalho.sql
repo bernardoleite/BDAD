@@ -89,6 +89,7 @@ INSERT INTO Exame VALUES (2, 2, 1220, 1630, 'Mau', 2, 'RaioX', 258913, NULL, NUL
 INSERT INTO Exame VALUES (3, 2, 1220, 1630, 'Mau', 2, 'Ressonancia', NULL, 156790, NULL);
 INSERT INTO Exame VALUES (4, 2, 1220, 1630, 'Mau', 2, 'Eletrocardiograma', NULL, 156790, NULL);
 INSERT INTO Exame VALUES (5, 2, 1220, 1630, 'Mau', 4, 'RaioX', NULL, 156790, NULL);
+INSERT INTO Exame VALUES (6, 2, 1220, 1630, 'Mau', 2, 'Ressonancia', NULL, 156790, NULL);
 
 -- Table: Funcionário
 CREATE TABLE Funcionario (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER);
