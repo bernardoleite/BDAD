@@ -22,13 +22,29 @@ INSERT INTO Departamento VALUES ('CARDIOLOGIA');
 INSERT INTO Departamento VALUES ('OTORRINOLARINGOLOGIA');
 
 -- Table: DepEnfermeiro
-CREATE TABLE DepEnfermeiro (Enfermeiro REFERENCES Enfermeiro (NIF), Departamento REFERENCES Departamento (Designação), PRIMARY KEY (Enfermeiro, Departamento));
+CREATE TABLE DepEnfermeiro (Enfermeiro REFERENCES Enfermeiro (NIF), Departamento REFERENCES Departamento (Designacao), PRIMARY KEY (Enfermeiro, Departamento));
+
+
+INSERT INTO DepEnfermeiro VALUES (156790, 'OFTALMOLOGIA');
+INSERT INTO DepEnfermeiro VALUES (156791, 'OFTALMOLOGIA');
+INSERT INTO DepEnfermeiro VALUES (156792, 'CARDIOLOGIA');
+INSERT INTO DepEnfermeiro VALUES (156793, 'OTORRINOLARINGOLOGIA');
+INSERT INTO DepEnfermeiro VALUES (156794, 'OTORRINOLARINGOLOGIA');
 
 -- Table: DepFuncionário
-CREATE TABLE DepFuncionario (Funcionario REFERENCES Funcionario (NIF), Departamento REFERENCES Departamento (Designação), PRIMARY KEY (Funcionario, Departamento));
+CREATE TABLE DepFuncionario (Funcionario REFERENCES Funcionario (NIF), Departamento REFERENCES Departamento (Designacao), PRIMARY KEY (Funcionario, Departamento));
+
+INSERT INTO DepFuncionario VALUES (258900, 'OFTALMOLOGIA');
+INSERT INTO DepFuncionario VALUES (258901, 'OFTALMOLOGIA');
+INSERT INTO DepFuncionario VALUES (258902, 'CARDIOLOGIA');
 
 -- Table: DepTécnico
 CREATE TABLE DepTecnico (Tecnico REFERENCES Tecnico (NIF), Departamento REFERENCES Departamento (Designação), PRIMARY KEY (Tecnico, Departamento));
+
+INSERT INTO DepTecnico VALUES (220910, 'OTORRINOLARINGOLOGIA');
+INSERT INTO DepTecnico VALUES (220911, 'OTORRINOLARINGOLOGIA');
+INSERT INTO DepTecnico VALUES (220912, 'CARDIOLOGIA');
+
 
 -- Table: DiaEnfermeiro
 CREATE TABLE DiaEnfermeiro (DiaTrabalho REFERENCES DiaTrabalho (Dia), Enfermeiro REFERENCES Enfermeiro (NIF), PRIMARY KEY (DiaTrabalho, Enfermeiro));
@@ -73,7 +89,14 @@ CREATE TABLE DiaTécnico (DiaTrabalho REFERENCES DiaTrabalho (Dia), Técnico REF
 -- Table: Enfermeiro
 CREATE TABLE Enfermeiro (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER, Departamento REFERENCES Departamento (Designação));
 
-INSERT INTO Enfermeiro VALUES('Adelaide', 30, 1965, 156790, 912876350, 'OFTALMOLOGIA' );
+INSERT INTO Enfermeiro VALUES('Adelaide', 30, 1965, 156790, 912876350, 'OFTALMOLOGIA');
+INSERT INTO Enfermeiro VALUES('Castelo Viriato', 33, 1962, 156791, 934876350, 'OFTALMOLOGIA');
+INSERT INTO Enfermeiro VALUES('Maria Laranja', 33, 1958, 156792, 9348763509, 'CARDIOLOGIA');
+INSERT INTO Enfermeiro VALUES('Marco Zegafredo', 40, 1962, 156793, 964876350, 'OTORRINOLARINGOLOGIA');
+INSERT INTO Enfermeiro VALUES('Tino Pato', 54, 1957, 156794, 964874100, 'OTORRINOLARINGOLOGIA');
+INSERT INTO Enfermeiro VALUES('Selena Gominhas', 24, 1970, 156795, 964874111, 'OTORRINOLARINGOLOGIA');
+INSERT INTO Enfermeiro VALUES('Zelino Madrinho', 35, 1968, 156796, 964874111, 'CARDIOLOGIA');
+
 -- Table: Especialidde
 CREATE TABLE Especialidade (Sigla TEXT PRIMARY KEY,Designação TEXT , MedicoChefe REFERENCES Medico (NIF));
 
@@ -97,6 +120,7 @@ CREATE TABLE Funcionario (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INT
 INSERT INTO Funcionario	VALUES ('Francisco Carneiro', 27, 1990, 258900, 919028750);
 INSERT INTO Funcionario	VALUES ('Maria Coelho', 32, 1985, 258901, 919028751);
 INSERT INTO Funcionario	VALUES ('Alvaro Caetano', 29, 1988, 258902, 919028752);
+INSERT INTO Funcionario	VALUES ('Frederico Gonçalves', 50, 1987, 258903, 919028699);
 
 -- Table: Limpeza
 CREATE TABLE Limpeza (Funcionario REFERENCES Funcionario (NIF), SalaExame REFERENCES SalaExame (ID), PRIMARY KEY (Funcionario, SalaExame));
@@ -153,6 +177,12 @@ INSERT INTO TipoExame VALUES ('Ressonancia');
 
 -- Table: Técnico
 CREATE TABLE Tecnico (Nome TEXT, Idade INTEGER, DataNascimento DATE, NIF INTEGER PRIMARY KEY, Telemóvel INTEGER);
+
+INSERT INTO Tecnico VALUES ('Carolina de Rios', 20, 1980, 220910, 919028801);
+INSERT INTO Tecnico VALUES ('Margarida Silva', 52, 1972, 220911, 929028802);
+INSERT INTO Tecnico VALUES ('Catarina Ferraz', 23, 1998, 220912, 969028803);
+INSERT INTO Tecnico VALUES ('Guilherme Mata', 37, 1969, 220913, 919040804);
+INSERT INTO Tecnico VALUES ('Dimitri Malokv', 42, 1960, 220914, 919040999);
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;
