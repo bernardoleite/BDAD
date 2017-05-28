@@ -2,10 +2,6 @@
 .headers	on
 .nullvalue	NULL
 
-SELECT sum  (CASE WHEN Medico IS NOT NULL THEN 1 ELSE 0 END) countMed ,
- sum  (CASE WHEN Enfermeiro IS NOT NULL THEN 1 ELSE 0 END) countEnf,
- sum  (CASE WHEN Tecnico IS NOT NULL THEN 1 ELSE 0 END) countTec FROM Exame;*/
-
  CREATE VIEW VALORES_VIEW AS
 SELECT (SELECT 
 sum  (CASE WHEN Medico IS NOT NULL THEN 1 ELSE 0 END)) med,
